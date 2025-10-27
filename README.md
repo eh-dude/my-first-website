@@ -1,2 +1,2 @@
 # my-first-website
-don't ask me anything i just tried, didn't know shit... asked google and chatGPT for templating and quick fixes yeah i now know a bit of css and html :)
+tried to keep it html css only (not really a coder yet, just a vibe coder i guess. Hope that overtime i will be able to pivot a little from my humanities background)
