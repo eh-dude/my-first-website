@@ -15,7 +15,7 @@
   /* unknown */
   --color-heading: #03312e;
   /* unknown */
-  --color-muted: #dfdaba;
+  --color-muted: #feebd5;
   /* unknown */
   /* Extras for play */
   --color-fun-1: #d9edc4;
@@ -58,33 +58,9 @@
   --shadow-popup-left: -4px 0 12px rgba(0, 0, 0, 0.2);
 }
 
-@font-face {
-  font-family: 'PlaypenSansDeva';
-  src: url('../fonts/PlaypenSansDeva-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PlaypenSansDeva';
-  src: url('../fonts/PlaypenSansDeva-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PlaypenSansDeva';
-  src: url('../fonts/PlaypenSansDeva-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'PlaypenSansDeva';
-  src: url('../fonts/PlaypenSansDeva-Thin.woff2') format('woff2');
-  font-weight: 100;
-  font-style: italic;
-}
+@font-face { font-family: 'PlaypenSansDeva'; src: url('../fonts/PlaypenSansDeva-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; }
+@font-face { font-family: 'Karma-Suture'; src: url('../fonts/Karma-Suture.woff2') format('woff2'); }
+@font-face { font-family: 'Ponderosa-Regular'; src: url('../fonts/Ponderosa-Regular.woff2') format('woff2'); }
 
 /* Custom scrollbar styles */
 ::-webkit-scrollbar {

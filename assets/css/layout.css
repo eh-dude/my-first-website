@@ -4,20 +4,21 @@
   box-shadow: 0 0px 0px 0 #32311933, 0 0px 0px 0 #32311933;
 }
 
-/* Blogs Trigger button */
+/* Rectangular Trigger button */
 .button {
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 1000;
   cursor: pointer;
-  width: 184px;
+  width: 200px;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  font-size: 1.125em;
+  font-family: 'Karma-Suture', san-serif;
+  font-size: 1em;
   font-weight: var(--font-weight-black);
   letter-spacing: 2px;
   color: var(--color-fun-3);
@@ -47,6 +48,9 @@ header {
   gap: 0rem;
   border-radius: 12px;
   border: 4px solid #e8737a;
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .pfp {
@@ -60,15 +64,16 @@ header {
 .pfp::after {
   content: attr(data-tooltip);
   position: absolute;
-  top: 70%;
-  left: 50%;
+  top: 75%;
+  left: 80%;
   transform: translateX(calc(-50% + 130px));
   background: transparent;
-  color: #ffffff;
+  color: #000000;
   padding: 6px 10px;
   border-radius: 6px;
   white-space: nowrap;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-family: 'Ponderosa-Regular';
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease-in-out;
@@ -137,6 +142,8 @@ header {
   justify-content: space-between;
   margin-top: 1rem;
   margin-bottom: var(--spacing-vertical-base);
+  margin-left: 8px;
+  margin-right: 8px;
   flex-wrap: wrap;
   position: relative;
 }
@@ -216,7 +223,6 @@ header {
 }
 
 /* right Popup Components */
-
 .link-list {
   list-style: none;
   padding: 0;
@@ -256,6 +262,7 @@ header {
 .link-list-item-text {
   flex-grow: 1;
   text-align: start;
+  font-family: 'Karma-Suture', san-serif;
   font-size: 1.2rem;
   font-weight: var(--font-weight-medium);
   margin: 0 1rem;
@@ -273,7 +280,6 @@ header {
 }
 
 /* Gallery Section */
-
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -295,13 +301,61 @@ header {
   border-radius: 4px;
 }
 
-.standby-gif {
-  max-width: 800px;
+/* Quote image section */
+.quote-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 410px;
   width: 100%;
   margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-.standby-gif img {
-  width: 100%;
+.quote-image img {
+  max-width: 100%;
   height: auto;
+  border: 4px solid #e8737a;
+  border-radius: 12px;
+  display: block;
+}
+
+@media (max-width: 600px) {
+.quote-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 410px;
+  width: 75%;
+  margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Text box inside popup */
+.monologue-box {
+    background-color: transparent;
+    padding: 24px;  
+    border-radius: 8px; 
+    max-width: 90%; 
+    margin: 20px auto;
+    box-sizing: border-box;
+    max-height: 60vh;
+    overflow-y: auto;  
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5); 
+    border: 1px solid #3d2c2c; 
+}
+
+.text-block {
+    color: var(--color-text);
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    white-space: pre-wrap;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-font-size: 12px;
+    -webkit-text-size-adjust: 100%;
+    font-size: 14px;
 }
