@@ -151,7 +151,7 @@ body:has(#popup-toc:target) {
     inset 0px 4px 4px -3px #000,
     inset 0px -4px 4px -3px #000c,
     inset 0px 0px 24px -3px #f7b0a2;
-  background: #fff;
+  background: #ffeeda;
   isolation: isolate;
   transition:
     0.25s all,
@@ -164,7 +164,7 @@ body:has(#popup-toc:target) {
   z-index: -1;
   inset: 0;
   border-radius: 24px;
-  background: radial-gradient(circle at 50% 150%, #00ace6, #0000 50%);
+  background: radial-gradient(circle at 50% 150%, #00ace6, #ffffff 50%);
   background-size: 300% 50%;
   background-position: 50% 100%;
   background-repeat: no-repeat;
@@ -178,7 +178,7 @@ body:has(#popup-toc:target) {
   z-index: -1;
   inset: 0;
   border-radius: 24px;
-  background: radial-gradient(circle at 50% 320%, #00ace6, #0000 50%);
+  background: radial-gradient(circle at 50% 320%, #00ace6, #ffffff 50%);
   background-size: 300% 50%;
   background-position: 50% 0%;
   background-repeat: no-repeat;
