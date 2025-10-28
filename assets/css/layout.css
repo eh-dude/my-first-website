@@ -126,13 +126,13 @@ header {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: clamp(150px, 20vw, 128px);
+  width: clamp(250px, 20vw, 125px);
   text-align: center;
 }
 
 .center-logo img {
-  max-width: 150px;
-  height: 150px;
+  max-width: 235px;
+  height: 125px;
   object-fit: contain;
 }
 
