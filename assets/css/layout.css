@@ -66,7 +66,7 @@ header {
 .pfp::after {
   content: attr(data-tooltip);
   position: absolute;
-  top: 92%;
+  top: 88%;
   left: 80%;
   transform: translateX(calc(-50% + 130px));
   background: transparent;
