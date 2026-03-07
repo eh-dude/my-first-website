@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Countdown</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CSS START -->
+<style>
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    font-family: sans-serif;
+    background: #0f0f0f;
+    color: #ffffff;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 30px;
+}
+
+h1 a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+h1 a:hover {
+    color: #FADADD;
+}
+
+#countdown {
+    font-size: 5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+</style>
+<!-- CSS END -->
+</head>
+
+<body>
+
+<h1>
+    <a href="https://guns.lol/ehdude" target="_blank" rel="noopener">
+        `(*>﹏<*)′ </a>
+    </a>
+</h1>
+<div id="countdown">--:--:--.---</div>
+
+<!-- JAVASCRIPT START -->
+<script>
+
+// SET TARGET DATE HERE
+// TARGET DATE
+const targetDate = new Date("2026-04-11T07:00:00").getTime();
+
+const display = document.getElementById("countdown");
+
+function updateCountdown() {
+
+    const now = Date.now();
+    let diff = targetDate - now;
+
+    if (diff <= 0) {
+        display.textContent = "00d 00:00:00";
+        return;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    diff %= 86400000;
+
+    const hours = Math.floor(diff / 3600000);
+    diff %= 3600000;
+
+    const minutes = Math.floor(diff / 60000);
+    diff %= 60000;
+
+    const seconds = Math.floor(diff / 1000);
+    const milliseconds = diff % 1000;
+
+    const d = String(days).padStart(2, "0");
+    const h = String(hours).padStart(2, "0");
+    const m = String(minutes).padStart(2, "0");
+    const s = String(seconds).padStart(2, "0");
+    const ms = String(milliseconds).padStart(3, "0");
+
+    display.textContent = `${d}d ${h}:${m}:${s}`;
+
+    requestAnimationFrame(updateCountdown);
+}
+
+updateCountdown();
+
+</script>
+<!-- JAVASCRIPT END -->
+</body>
+</html>
