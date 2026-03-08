@@ -6,18 +6,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- CSS START -->
 <style>
-
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
+    padding: 20px;
+
     font-family: sans-serif;
     background: #0f0f0f;
     color: #ffffff;
+    text-align: center;
 }
 
 h1 {
@@ -41,6 +44,32 @@ h1 a:hover {
     letter-spacing: 2px;
 }
 
+@media (max-width: 768px) {
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 25px;
+    }
+
+    #countdown {
+        font-size: 3.5rem;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    #countdown {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+
+}
 </style>
 <!-- CSS END -->
 </head>
@@ -101,4 +130,5 @@ updateCountdown();
 </script>
 <!-- JAVASCRIPT END -->
 </body>
+
 </html>
