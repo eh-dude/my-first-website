@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimal Wave Nav</title>
+  <style>
+    :root {
+      --bg: #000c1f; /* Slightly darker to match image depth */
+      --text: rgba(255, 255, 255, 0.85);
+      --text-hover: #ffffff;
+      --accent: #00d4ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--bg);
+      overflow: hidden;
+      font-family: "JetBrains Mono", "IBM Plex Mono", "SFMono-Regular", "Cascadia Mono", "Fira Code", monospace;
+    }
+
+    .stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background:
+        linear-gradient(rgba(0,12,31,0.2), rgba(0,12,31,0.2)),
+        url("blue-waves.webp") center center / cover no-repeat;
+    }
+
+    a {
+      position: absolute;
+      color: var(--text);
+      text-decoration: none;
+      font-size: clamp(16px, 1.8vw, 32px); /* Slightly smaller to fit pockets better */
+      letter-spacing: -0.02em;
+      line-height: 1;
+      white-space: nowrap;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    /* Pocket 1: Bottom Left (Under the first crest) */
+    .home {
+      left: 10%;
+      top: 72%;
+      transform: rotate(-6deg);
+    }
+
+    /* Pocket 2: Top Middle (Above the first trough) */
+    .docs {
+      left: 36%;
+      top: 18%;
+      transform: rotate(4deg);
+    }
+
+    /* Pocket 3: Bottom Right-ish (Under the twist/second crest) */
+    .ping {
+      left: 63%;
+      top: 80%;
+      transform: rotate(-10deg);
+    }
+
+    /* Pocket 4: Top Right (Above the tail curve) */
+    .guns {
+      left: 84%;
+      top: 25%;
+      transform: rotate(8deg);
+    }
+
+    /* Hover States - Following the "flow" of the pocket */
+    a:hover {
+      color: var(--text-hover);
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+    }
+
+    .home:hover { transform: rotate(-4deg) translateY(-5px) scale(1.05); }
+    .docs:hover { transform: rotate(2deg) translateY(5px) scale(1.05); }
+    .ping:hover { transform: rotate(-8deg) translateY(-5px) scale(1.05); }
+    .guns:hover { transform: rotate(6deg) translateY(5px) scale(1.05); opacity: 1; }
+
+    /* Responsive Adjustments to keep links in the black voids */
+    @media (max-width: 1100px) {
+      .home { left: 8%; top: 75%; }
+      .docs { left: 32%; top: 15%; }
+      .ping { left: 60%; top: 82%; }
+      .guns { left: 80%; top: 22%; }
+    }
+
+    @media (max-width: 768px) {
+      a { font-size: 18px; }
+      .home { left: 5%; top: 68%; }
+      .docs { left: 25%; top: 12%; }
+      .ping { left: 55%; top: 85%; }
+      .guns { left: 75%; top: 18%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" aria-label="Minimal wave navigation">
+    <a class="home" href="music-emo-boi.webp">placeholder</a>
+    <a class="docs" href="https://ehdude-blog.vercel.app">txt</a>
+    <a class="ping" href="https://ping.ehdude.com">ping</a>
+    <a class="guns" href="https://guns.lol/ehdude">external links</a>
+  </main>
+</body>
+</html>

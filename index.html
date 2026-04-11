@@ -1,137 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Countdown</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- CSS START -->
-<style>
-body {
-    margin: 0;
-    min-height: 100vh;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>enter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=VT323&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+      cursor: none;
+    }
 
-    padding: 20px;
+    .bg {
+      position: fixed;
+      inset: 0;
+      background-image: url("blackhole-tumblr.webp");
+      background-size: cover;
+      background-position: center 60%;
+      filter: brightness(0.75) saturate(1.2);
+      transform: scale(1.04);
+      animation: bgDrift 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgDrift {
+      0%   { transform: scale(1.04) translate(0px, 0px); }
+      100% { transform: scale(1.08) translate(-8px, -4px); }
+    }
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 20%, rgba(0,0,8,0.55) 100%);
+    }
 
-    font-family: sans-serif;
-    background: #0f0f0f;
+    .cursor {
+      position: fixed;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #fff;
+      pointer-events: none;
+      z-index: 999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: width .25s, height .25s;
+    }
+    .cursor.big { width: 44px; height: 44px; }
+
+    .lockscreen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      z-index: 10;
+    }
+
+.time {
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'VT323', monospace;
+    font-size: clamp(4rem, 14vw, 9rem);
+    color: rgba(220, 235, 255, 0.85);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-shadow: 0 0 60px rgba(100,180,255,0.3);
+    user-select: none;
+    white-space: nowrap;  /* Prevent line breaks */
+}
+
+.date {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'VT323', monospace;
+    font-style: normal;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     color: #ffffff;
-    text-align: center;
+    letter-spacing: 0.4em;
+    text-transform: lowercase;
+    user-select: none;
+    white-space: nowrap;  /* Prevent line breaks */
 }
 
-h1 {
-    font-size: 4rem;
-    margin-bottom: 30px;
-}
+    .enter-btn {
+      position: absolute;
+  top: 80%;
+  left: 36%;
+	  transform: translateX(-50%);
+	  margin-top: 1.5rem;
+      background: none;
+      border: none;
+      cursor: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0.5;
+      transition: opacity 0.4s;
+      animation: nudge 3s ease-in-out infinite;
+      text-decoration: none;
+    }
+    .enter-btn:hover { opacity: 1; }
 
-h1 a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-h1 a:hover {
-    color: #FADADD;
-}
-
-#countdown {
-    font-size: 5rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-@media (max-width: 768px) {
-
-    h1 {
-        font-size: 3rem;
-        margin-bottom: 25px;
+    @keyframes nudge {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
     }
 
-    #countdown {
-        font-size: 3.5rem;
+    .enter-label {
+      font-family: 'VT323', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+      color: rgba(180, 215, 255, 0.7);
+      letter-spacing: 0.5em;
+      text-transform: lowercase;
     }
 
-}
-
-@media (max-width: 480px) {
-
-    h1 {
-        font-size: 2rem;
-        margin-bottom: 20px;
+    .enter-arrow {
+      width: 1px;
+      height: 30px;
+      background: linear-gradient(to bottom, rgba(180,215,255,0.6), transparent);
     }
 
-    #countdown {
-        font-size: 2.5rem;
-        letter-spacing: 1px;
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
     }
-
-}
-</style>
-<!-- CSS END -->
+    .overlay.go { opacity: 1; pointer-events: all; }
+  </style>
 </head>
-
 <body>
 
-<h1>
-    <a href="https://guns.lol/ehdude" target="_blank" rel="noopener">
-        `(*>﹏<*)′ </a>
+  <div class="cursor" id="cursor"></div>
+  <div class="bg"></div>
+
+  <div class="lockscreen">
+	<div class="time" id="countdown">00d 00:00:00</div>
+	<div class="date"></div>
+    <a class="enter-btn" href="actual-inside.html" id="enterBtn">
+      <span class="enter-label">click to enter</span>
+      <div class="enter-arrow"></div>
     </a>
-</h1>
-<h2>&#127808; When you are done, watch kung fu panda series &#127808;</h2>
-<div id="countdown">--:--:--.---</div>
+  </div>
 
-<!-- JAVASCRIPT START -->
-<script>
+  <div class="overlay" id="overlay"></div>
 
-// SET TARGET DATE HERE
-// TARGET DATE
-const targetDate = new Date("2026-04-11T07:00:00").getTime();
+  <script>
+    const cur = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top  = e.clientY + 'px';
+    });
+    document.getElementById('enterBtn').addEventListener('mouseenter', () => cur.classList.add('big'));
+    document.getElementById('enterBtn').addEventListener('mouseleave', () => cur.classList.remove('big'));
 
-const display = document.getElementById("countdown");
-
-function updateCountdown() {
-
-    const now = Date.now();
-    let diff = targetDate - now;
-
-    if (diff <= 0) {
-        display.textContent = "00d 00:00:00";
-        return;
-    }
-
-    const days = Math.floor(diff / 86400000);
-    diff %= 86400000;
-
-    const hours = Math.floor(diff / 3600000);
-    diff %= 3600000;
-
-    const minutes = Math.floor(diff / 60000);
-    diff %= 60000;
-
-    const seconds = Math.floor(diff / 1000);
-    const milliseconds = diff % 1000;
-
-    const d = String(days).padStart(2, "0");
-    const h = String(hours).padStart(2, "0");
-    const m = String(minutes).padStart(2, "0");
-    const s = String(seconds).padStart(2, "0");
-    const ms = String(milliseconds).padStart(3, "0");
-
-    display.textContent = `${d}d ${h}:${m}:${s}`;
-
-    requestAnimationFrame(updateCountdown);
+function tick() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const nextYear = new Date(currentYear + 1, 0, 1);  // January 1st of next year
+  const timeLeft = nextYear - now;  // Calculate time remaining
+  
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+  
+  // Display: "255d 12:34:56" format
+  document.getElementById('countdown').textContent = 
+    `${String(days).padStart(2,'0')}d ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
 }
 
-updateCountdown();
-
-</script>
-<!-- JAVASCRIPT END -->
+tick();
+setInterval(tick, 1000);  // Updates every 1 second
+  </script>
 </body>
-
 </html>
-
-
