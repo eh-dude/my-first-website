@@ -78,7 +78,9 @@
     text-shadow: 0 0 60px rgba(100,180,255,0.3);
     user-select: none;
     white-space: nowrap;  /* Prevent line breaks */
+    font-variant-numeric: tabular-nums;
 }
+
 
 .date {
     position: absolute;
@@ -178,24 +180,86 @@
   <div class="overlay" id="overlay"></div>
 
 <script>
-function tick() {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const nextYear = new Date(currentYear + 1, 0, 1);  // January 1st of next year
-  const timeLeft = nextYear - now;  // Calculate time remaining
-  
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-  
-  // Display: "255d 12:34:56" format
-  document.getElementById('countdown').textContent = 
-    `${String(days).padStart(2,'0')}d ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
-}
+(() => {
+  const countdown = document.getElementById('countdown');
 
-tick();
-setInterval(tick, 1000);  // Updates every 1 second
+  const MS_PER_SECOND = 1_000;
+  const MS_PER_MINUTE = 60 * MS_PER_SECOND;
+  const MS_PER_HOUR = 60 * MS_PER_MINUTE;
+  const MS_PER_DAY = 24 * MS_PER_HOUR;
+
+  /*
+    Precision model:
+    - Date.now() gives wall-clock time, but it can jump if the device clock is adjusted.
+    - performance.now() is monotonic and high-resolution, so it is better for a live countdown.
+    - We anchor wall-clock time once, then advance it with performance.now().
+
+    This is the highest-precision approach available in a normal static browser page.
+    True atomic/GNSS-grade accuracy requires a trusted external time source and network
+    latency compensation, which a standalone static page cannot guarantee.
+  */
+  let wallClockAnchorMs = Date.now();
+  let monotonicAnchorMs = performance.now();
+  let targetMs = getNextLocalNewYearMs(wallClockAnchorMs);
+  let lastRendered = '';
+
+  function getMonotonicWallTimeMs() {
+    return wallClockAnchorMs + (performance.now() - monotonicAnchorMs);
+  }
+
+  function getNextLocalNewYearMs(nowMs) {
+    const now = new Date(nowMs);
+    return new Date(now.getFullYear() + 1, 0, 1, 0, 0, 0, 0).getTime();
+  }
+
+  function resyncAnchor() {
+    wallClockAnchorMs = Date.now();
+    monotonicAnchorMs = performance.now();
+    targetMs = getNextLocalNewYearMs(wallClockAnchorMs);
+  }
+
+  function formatTimeLeft(msLeft) {
+    const safeMs = Math.max(0, msLeft);
+    const days = Math.floor(safeMs / MS_PER_DAY);
+    const hours = Math.floor((safeMs % MS_PER_DAY) / MS_PER_HOUR);
+    const minutes = Math.floor((safeMs % MS_PER_HOUR) / MS_PER_MINUTE);
+    const seconds = Math.floor((safeMs % MS_PER_MINUTE) / MS_PER_SECOND);
+    const centiseconds = Math.floor((safeMs % MS_PER_SECOND) / 10);
+
+    return `${String(days).padStart(3, '0')}d ` +
+      `${String(hours).padStart(2, '0')}:` +
+      `${String(minutes).padStart(2, '0')}:` +
+      `${String(seconds).padStart(2, '0')}.` +
+      `${String(centiseconds).padStart(2, '0')}`;
+  }
+
+  function render() {
+    const nowMs = getMonotonicWallTimeMs();
+
+    if (nowMs >= targetMs) {
+      resyncAnchor();
+    }
+
+    const nextValue = formatTimeLeft(targetMs - getMonotonicWallTimeMs());
+
+    if (nextValue !== lastRendered) {
+      countdown.textContent = nextValue;
+      lastRendered = nextValue;
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  // Re-anchor occasionally and whenever the tab returns from the background.
+  // This corrects sleep/wake jumps, clock edits, daylight-saving changes, and long suspensions.
+  setInterval(resyncAnchor, 60_000);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) resyncAnchor();
+  });
+  window.addEventListener('focus', resyncAnchor);
+
+  render();
+})();
 </script>
 </body>
 </html>
